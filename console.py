@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = args[3]
                 try:
                     attr_value = eval(attr_value)
-                except ValueError:
+                except Exception:
                     pass
                 setattr(obj, attr_name, attr_value)
                 obj.save()

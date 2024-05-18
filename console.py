@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Command Interpreter module"""
 
-import os
 from models import storage
 from models.base_model import BaseModel
 import shlex
@@ -112,13 +111,14 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 obj = storage.all()[key]
+                attr_name = args[2]
+                attr_value = args[3]
                 try:
-                    attr_type = type(getattr(obj, args[2], str))
-                    attr_value = attr_type(attr_value)
-                    setattr(obj, args[2], attr_value)
-                    obj.save()
-                except exception as e:
+                    attr_value = eval(attr_value)
+                except ValueError:
                     pass
+                setattr(obj, attr_name, attr_value)
+                obj.save()
 
     def do_EOF(self, arg):
         """Ends the file with Ctrl+D"""

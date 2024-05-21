@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Command Interpreter module"""
 
+from models.user import User
 from models import storage
 from models.base_model import BaseModel
 import shlex
@@ -11,7 +12,7 @@ class HBNBCommand(cmd.Cmd):
     """Class for the command line interpreter"""
 
     prompt = "(hbnb) "
-    classes = ["BaseModel"]
+    classes = ["BaseModel", "User"]
 
     def do_quit(self, arg):
         """Quits the program"""
@@ -29,7 +30,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             new_instance = eval(args[0])()
-            new_instance.save()
+            storage.save()
             print(new_instance.id)
 
     def do_show(self, arg):

@@ -1,6 +1,12 @@
 #!/usr/bin/python3
 """Command Interpreter module"""
 
+
+from models.city import City
+from models.review import Review
+from models.place import Place
+from models.amenity import Amenity
+from models.state import State
 from models.user import User
 from models import storage
 from models.base_model import BaseModel
@@ -12,7 +18,7 @@ class HBNBCommand(cmd.Cmd):
     """Class for the command line interpreter"""
 
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User"]
+    classes = ["BaseModel", "User", "Place", "State", "City", "Review", "Amenity"]
 
     def do_quit(self, arg):
         """Quits the program"""

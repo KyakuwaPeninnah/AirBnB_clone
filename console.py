@@ -18,7 +18,8 @@ class HBNBCommand(cmd.Cmd):
     """Class for the command line interpreter"""
 
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User", "Place", "State", "City", "Review", "Amenity"]
+    classes = ["BaseModel", "User", "Place",
+               "State", "City", "Review", "Amenity"]
 
     def do_quit(self, arg):
         """Quits the program"""
@@ -76,6 +77,19 @@ class HBNBCommand(cmd.Cmd):
             for key, value in objects.items():
                 if key.startswith(args[0]):
                     print(str(value))
+
+    def default(self, arg):
+        """ retrieve all instances of a class by
+        using: <class name>.all()
+        """
+        if ".all()" in arg:
+            class_name = arg.split('.all()')[0]
+            if class_name in self.classes:
+                self.do_all(class_name)
+            else:
+                print("** class doesn't exist **")
+        else:
+                print("***Unknown syntax:{}".format(arg))
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""

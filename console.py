@@ -88,8 +88,14 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(class_name)
             else:
                 print("** class doesn't exist **")
+        elif ".count()" in arg:
+            class_name = arg.split('.count()')[0]
+            if class_name in self.classes:
+                self.do_count(class_name)
+            else:
+                print("** class doesn't exist **")
         else:
-                print("***Unknown syntax:{}".format(arg))
+            print("***Unknown syntax:{}".format(arg))
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
@@ -140,6 +146,14 @@ class HBNBCommand(cmd.Cmd):
                     pass
                 setattr(obj, attr_name, attr_value)
                 obj.save()
+
+    def do_count(self, arg):
+        """Retrieves number of objects based on class name"""
+        count = 0
+        for key, value in storage.all().items():
+            if arg == key.split(".")[0]:
+                count += 1
+        print(count)
 
     def do_EOF(self, arg):
         """Ends the file with Ctrl+D"""

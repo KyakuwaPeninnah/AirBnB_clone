@@ -2,6 +2,11 @@
 """Filestorage module"""
 
 
+from models.city import City
+from models.state import State
+from models.amenity import Amenity
+from models.review import Review
+from models.place import Place
 from models.user import User
 import json
 import os
@@ -35,12 +40,15 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        class_dict = {"BaseModel": BaseModel, "User": User}
+        class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+                      "City": City, "Review": Review,
+                      "Place": Place, "Amenity": Amenity}
         try:
             if os.path.isfile(FileStorage.__file_path):
                 with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                     content_file = json.load(f)
                     for key, value in content_file.items():
-                        FileStorage.__objects[key] = class_dict[value["__class__"]](**value)
+                        objects = FileStorage.__objects
+                        objects[key] = class_dict[value["__class__"]](**value)
         except FileNotFoundError:
             pass

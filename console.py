@@ -108,6 +108,20 @@ class HBNBCommand(cmd.Cmd):
                 self.do_destroy(f"{class_name} {required_id}")
             else:
                 print("** class doesn't exist **")
+        elif ".update(" in arg:
+            class_name, rest = arg.split('.update(')
+            rest = rest.rstrip(')')
+            parts = rest.split(', ')
+            if len(parts) == 3:
+                instance_id = parts[0].strip('"')
+                attribute_name = parts[1].strip('"')
+                attribute_value = parts[2].strip('"')
+                if class_name in self.classes:
+                    self.do_update(
+                            f"{class_name} {instance_id}
+                            {attribute_name} {attribute_value}")
+            else:
+                print("** class doesn't exist **")
         else:
             print("***Unknown syntax:{}".format(arg))
 
